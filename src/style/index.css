@@ -14,6 +14,15 @@ body {
   font-size: 1.4rem;
 }
 
+a {
+  text-decoration: none;
+  color: #481ECD;
+}
+
+a:hover {
+  color: #000;
+}
+
 main {
   display: flex;
   align-items: center;
@@ -45,13 +54,13 @@ main {
   margin-top: 6px;
 }
 
+.table {
+  margin-top: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
 table {
   border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 table thead tr {
@@ -62,7 +71,7 @@ table thead tr {
 
 table th,
 table td {
-    padding: 12px 15px;
+    padding: .8rem 1rem;
 }
 
 table tbody tr {
@@ -91,9 +100,30 @@ table img {
   margin-right: .3em;
 }
 
+.pager {
+  background-color: #481ECD;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  color: #fff;
+  padding: .8rem 1rem;
+}
+
+.pager li {
+  width: 50%;
+}
+
+.pager a {
+  color: #fff;
+}
+
+.pager .next {
+  text-align: right;
+}
+
 footer {
   margin-top: 30px;
-  font-size: 14px;
+  font-size: .9rem;
 }
 
 footer .copyinfo {

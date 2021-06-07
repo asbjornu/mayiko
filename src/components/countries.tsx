@@ -1,5 +1,10 @@
 import React from 'react'
-import { useDeno } from 'framework/react'
+import { useDeno, useRouter } from 'framework/react'
+import { Link,  } from 'https://esm.sh/react-router-dom'
+// import { Link } from "https://deno.land/x/aleph/mod.ts";
+import { useMemo } from "react";
+import queryString from "https://esm.sh/query-string";
+// import { useRouter } from "https://deno.land/x/aleph/mod.ts"
 
 function mapDocumentCodeToIcon(document) {
   switch (document.code) {
@@ -30,7 +35,7 @@ function renderRow(country) {
     : country.options.withdrawalMaximum / 100
 
   return (
-    <tr>
+    <tr key={country.code}>
       <td>{documents}</td>
       <td>{country.name}</td>
       <td className="r">{maxWithdrawal}</td>
@@ -39,25 +44,56 @@ function renderRow(country) {
   )
 }
 
+function hydrateQuery() {
+  const { query } = useRouter()
+  const max = parseInt(query.get('max'), 10) || 10;
+  const offset = parseInt(query.get('offset'), 10) || 0;
+  const prev = offset > 0 ? offset - max : null
+  const next = max + offset
+  const prevUrl = `?offset=${prev}`
+  const nextUrl = `?offset=${next}`
+
+  return { max, offset, prevUrl, nextUrl }
+}
+
+function buildCoinDirectUrl(query) {
+  const url = new URL('https://api.coindirect.com/api/country')
+  url.searchParams.append('max', query.max.toString())
+  url.searchParams.append('offset', query.offset.toString())
+
+  return url.href
+}
+
 export default function Countries() {
+  const query = hydrateQuery()
+  const coinDirectUrl = buildCoinDirectUrl(query)
+
   const countries = useDeno(async () => {
-    const response = await fetch('https://api.coindirect.com/api/country');
+    const response = await fetch(coinDirectUrl);
     return await response.json()
   })
 
   const rows = countries.map(renderRow)
+  const prev = ''
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Documents</th>
-          <th>Name</th>
-          <th className="r">Max withdrawal</th>
-          <th>Currency</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <div className="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Documents</th>
+            <th>Name</th>
+            <th className="r">Max withdrawal</th>
+            <th>Currency</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+
+      <ul className="pager">
+        <li className="prev" key="prev"><Link to={query.prevUrl}>❮ Previous</Link></li>
+        <li className="next" key="next"><Link to={query.nextUrl}>Next ❯</Link></li>
+      </ul>
+    </div>
   )
 }
