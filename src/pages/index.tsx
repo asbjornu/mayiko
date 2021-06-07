@@ -1,6 +1,5 @@
 import { useDeno } from 'framework/react'
 import React from 'react'
-import { useParams, useLocation } from 'https://esm.sh/react-router-dom'
 import Logo from '~/components/logo.tsx'
 import Countries from '~/components/countries.tsx'
 

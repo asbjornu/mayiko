@@ -61,6 +61,7 @@ main {
 
 table {
   border-collapse: collapse;
+  min-width: 60rem;
 }
 
 table thead tr {
@@ -91,9 +92,23 @@ table tbody tr.active {
   color: #481ECD;
 }
 
-table .r {
+table .name {
+  min-width: 14rem;
+}
+
+table .max {
+  min-width: 10rem;
   text-align: right;
 }
+
+table .currency {
+  width: 6rem;
+}
+
+table .docs {
+  width: 8rem;
+}
+
 
 table img {
   height: 1.4rem;

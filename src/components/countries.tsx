@@ -1,10 +1,5 @@
 import React from 'react'
 import { useDeno, useRouter } from 'framework/react'
-import { Link,  } from 'https://esm.sh/react-router-dom'
-// import { Link } from "https://deno.land/x/aleph/mod.ts";
-import { useMemo } from "react";
-import queryString from "https://esm.sh/query-string";
-// import { useRouter } from "https://deno.land/x/aleph/mod.ts"
 
 function mapDocumentCodeToIcon(document) {
   switch (document.code) {
@@ -36,10 +31,10 @@ function renderRow(country) {
 
   return (
     <tr key={country.code}>
-      <td>{documents}</td>
       <td>{country.name}</td>
-      <td className="r">{maxWithdrawal}</td>
+      <td className="max">{maxWithdrawal}</td>
       <td>{country.defaultCurrency}</td>
+      <td>{documents}</td>
     </tr>
   )
 }
@@ -48,9 +43,9 @@ function hydrateQuery() {
   const { query } = useRouter()
   const max = parseInt(query.get('max'), 10) || 10;
   const offset = parseInt(query.get('offset'), 10) || 0;
-  const prev = offset > 0 ? offset - max : null
+  const prev = offset > 0 ? offset - max : -1
   const next = max + offset
-  const prevUrl = `?offset=${prev}`
+  const prevUrl = prev > -1 ? `?offset=${prev}` : null
   const nextUrl = `?offset=${next}`
 
   return { max, offset, prevUrl, nextUrl }
@@ -74,25 +69,25 @@ export default function Countries() {
   })
 
   const rows = countries.map(renderRow)
-  const prev = ''
+  const prev = query.prevUrl ? <a href={query.prevUrl}>❮ Previous</a> : null
 
   return (
     <div className="table">
       <table>
         <thead>
           <tr>
-            <th>Documents</th>
-            <th>Name</th>
-            <th className="r">Max withdrawal</th>
-            <th>Currency</th>
+            <th className="name">Name</th>
+            <th className="max">Max withdrawal</th>
+            <th className="currency">Currency</th>
+            <th className="docs">Documents</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
       </table>
 
       <ul className="pager">
-        <li className="prev" key="prev"><Link to={query.prevUrl}>❮ Previous</Link></li>
-        <li className="next" key="next"><Link to={query.nextUrl}>Next ❯</Link></li>
+        <li className="prev" key="prev">{prev}</li>
+        <li className="next" key="next"><a href={query.nextUrl}>Next ❯</a></li>
       </ul>
     </div>
   )
