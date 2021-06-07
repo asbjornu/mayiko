@@ -24,7 +24,10 @@ function renderDocument(document) {
 }
 
 function renderRow(country) {
-  const documents = country.documents.filter(x => x.required).map(renderDocument)
+  const documents = country.documents
+    .filter(x => x.required)
+    .sort((a, b) => a.code.localeCompare(b.code))
+    .map(renderDocument)
   const maxWithdrawal = isNaN(country.options.withdrawalMaximum)
     ? ''
     : country.options.withdrawalMaximum / 100
