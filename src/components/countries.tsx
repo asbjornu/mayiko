@@ -1,78 +1,37 @@
-import React from 'react'
-import { useDeno, useRouter } from 'framework/react'
+// @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
+import React from "https://dev.jspm.io/react/index.js";
+// @deno-types="https://deno.land/x/servest@v1.3.1/types/react-dom/server/index.d.ts"
+import ReactDOMServer from "https://dev.jspm.io/react-dom/server.js";
+import type { Document } from '../app/document.ts'
+import type { Country } from '../app/country.ts'
+import type { CountryResult } from '../app/country_result.ts'
 
-function mapDocumentCodeToIcon(document) {
-  switch (document.code) {
-    case 'idSelfie':
-      return 'selfie'
-    case 'idPassport':
-      return 'passport'
-    case 'proofOfAddress':
-      return 'address'
-  }
-
-  return 'unknown'
-}
-
-function renderDocument(document) {
-  const icon = mapDocumentCodeToIcon(document)
-  const iconUrl = `/${icon}.svg`
+function renderDocument(document: Document) {
+  const iconUrl = `/${document.icon}.svg`
 
   return (
     <img src={iconUrl} alt={document.description} title={document.description} />
   )
 }
 
-function renderRow(country) {
-  const documents = country.documents
-    .filter(x => x.required)
-    .sort((a, b) => a.code.localeCompare(b.code))
-    .map(renderDocument)
-  const maxWithdrawal = isNaN(country.options.withdrawalMaximum)
-    ? ''
-    : country.options.withdrawalMaximum / 100
+function renderRow(country: Country) {
+  const documents = country.documents.map(renderDocument)
 
   return (
     <tr key={country.code}>
       <td>{country.name}</td>
-      <td className="max">{maxWithdrawal}</td>
-      <td>{country.defaultCurrency}</td>
+      <td className="max">{country.maxWithdrawalAmount}</td>
+      <td>{country.currency}</td>
       <td>{documents}</td>
     </tr>
   )
 }
 
-function hydrateQuery() {
-  const { query } = useRouter()
-  const max = parseInt(query.get('max'), 10) || 10;
-  const offset = parseInt(query.get('offset'), 10) || 0;
-  const prev = offset > 0 ? offset - max : -1
-  const next = max + offset
-  const prevUrl = prev > -1 ? `?offset=${prev}` : null
-  const nextUrl = `?offset=${next}`
 
-  return { max, offset, prevUrl, nextUrl }
-}
-
-function buildCoinDirectUrl(query) {
-  const url = new URL('https://api.coindirect.com/api/country')
-  url.searchParams.append('max', query.max.toString())
-  url.searchParams.append('offset', query.offset.toString())
-
-  return url.href
-}
-
-export default function Countries() {
-  const query = hydrateQuery()
-  const coinDirectUrl = buildCoinDirectUrl(query)
-
-  const countries = useDeno(async () => {
-    const response = await fetch(coinDirectUrl);
-    return await response.json()
-  })
-
-  const rows = countries.map(renderRow)
-  const prev = query.prevUrl ? <a href={query.prevUrl}>❮ Previous</a> : null
+export default function Countries(countryResult: CountryResult) {
+  const rows = countryResult.countries.map(renderRow)
+  const query = countryResult.query;
+  const prev = query.prevUrl ? <a href={query.prevUrl}>❮ Previous</a> : null;
 
   return (
     <div className="table">
