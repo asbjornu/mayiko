@@ -1,10 +1,8 @@
 // @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
 import React from "https://dev.jspm.io/react/index.js";
-// @deno-types="https://deno.land/x/servest@v1.3.1/types/react-dom/server/index.d.ts"
-import ReactDOMServer from "https://dev.jspm.io/react-dom/server.js";
-import type { Document } from '../app/document.ts'
-import type { Country } from '../app/country.ts'
-import type { CountryResult } from '../app/country_result.ts'
+import type { Document } from '../coindirect/document.ts'
+import type { Country } from '../coindirect/country.ts'
+import type { CountryResult } from '../coindirect/country_result.ts'
 
 function renderDocument(document: Document) {
   const iconUrl = `/img/${document.icon}.svg`

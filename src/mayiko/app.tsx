@@ -1,10 +1,8 @@
 // @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
 import React from "https://dev.jspm.io/react/index.js";
-// @deno-types="https://deno.land/x/servest@v1.3.1/types/react-dom/server/index.d.ts"
-import ReactDOMServer from "https://dev.jspm.io/react-dom/server.js";
-import Logo from '../components/logo.tsx'
-import Countries from '../components/countries.tsx'
-import type { CountryResult } from './country_result.ts'
+import Logo from './logo.tsx'
+import Countries from './countries.tsx'
+import type { CountryResult } from '../coindirect/country_result.ts'
 
 export default function Mayiko(countryResult: CountryResult) {
   return (
