@@ -3,6 +3,6 @@ import React from "https://dev.jspm.io/react/index.js";
 
 export default function Logo({ size = 75 }: { size?: number }) {
   return (
-    <img src="/logo.svg" height={size} title="Mayiko" />
+    <img src="/img/logo.svg" height={size} title="Mayiko" />
   )
 }

@@ -7,7 +7,7 @@ import type { Country } from '../app/country.ts'
 import type { CountryResult } from '../app/country_result.ts'
 
 function renderDocument(document: Document) {
-  const iconUrl = `/${document.icon}.svg`
+  const iconUrl = `/img/${document.icon}.svg`
 
   return (
     <img src={iconUrl} alt={document.description} title={document.description} />
