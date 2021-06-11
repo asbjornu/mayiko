@@ -1,24 +1,31 @@
-import { QueryState } from "./query_state.ts";
 import { CountryResult } from "./country_result.ts";
+import { Country } from "./country.ts";
+import type { QueryState } from "./query_state.ts";
 
 export class CoindirectClient {
-  query: QueryState;
+  private static countries: Country[];
 
-  public constructor(url: URL) {
-    this.query = new QueryState(url);
+  private constructor(countries: Country[]) {
+    CoindirectClient.countries = countries;
   }
 
-  public async fetchCountries(): Promise<CountryResult> {
-    const coinDirectUrl = this.buildCoinDirectUrl(this.query);
-    const countries = await (await fetch(coinDirectUrl)).json();
-    return new CountryResult(countries, this.query);
+  public fetchCountries(query: QueryState): CountryResult {
+    console.log(CoindirectClient.countries.length)
+    query.total = CoindirectClient.countries.length;
+    const countries = CoindirectClient.countries.slice(query.offset, query.end);
+    return new CountryResult(countries, query);
   }
 
-  private buildCoinDirectUrl(query: QueryState) {
+  public static async create(): Promise<CoindirectClient> {
+    const coinDirectUrl = this.buildCoinDirectUrl();
+    const fetchedCountries = await (await fetch(coinDirectUrl)).json();
+    const countries = fetchedCountries.map((c: any) => new Country(c));
+    return new CoindirectClient(countries);
+  }
+
+  private static buildCoinDirectUrl() {
     const url = new URL("https://api.coindirect.com/api/country");
-    url.searchParams.append("max", query.pageSize.toString());
-    url.searchParams.append("offset", query.offset.toString());
-
+    url.searchParams.append("max", '1300');
     return url.href;
   }
 }

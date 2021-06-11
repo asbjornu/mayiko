@@ -4,14 +4,16 @@ import { Application, Router, send } from "https://deno.land/x/oak@v6.0.1/mod.ts
 import type { Context } from "https://deno.land/x/oak@v6.0.1/mod.ts";
 import Mayiko from "./mayiko/app.tsx";
 import { CoindirectClient } from './coindirect/coindirect_client.ts';
+import { QueryState } from './coindirect/query_state.ts'
+
+let coindirectClient: CoindirectClient;
 
 const mayikoRouter = new Router()
-  .get("/", async context => {
-    const coindirectClient = new CoindirectClient(context.request.url);
-    const countries = await coindirectClient.fetchAllCountries();
+  .get("/", context => {
+    const query = new QueryState(context.request.url)
+    const countries = coindirectClient.fetchCountries(query)
     const mayiko = Mayiko(countries);
     const rendered = ReactDOMServer.renderToString(mayiko);
-
     context.response.body = `<!DOCTYPE html>\n${rendered}`
   });
 
@@ -22,6 +24,13 @@ const staticRouter = new Router()
 const app = new Application();
 app.use(staticRouter.routes());
 app.use(mayikoRouter.routes());
+app.addEventListener("listen", async ({ hostname, port, secure }) => {
+  coindirectClient = await CoindirectClient.create();
+  console.log(
+    `Mayiko is now listening on: ${secure ? "https://" : "http://"}${hostname ??
+      "localhost"}:${port}`,
+  );
+});
 app.listen({ port: 5000 });
 
 async function handleStatic(context: Context) {

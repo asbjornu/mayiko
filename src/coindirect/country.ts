@@ -15,9 +15,9 @@ export class Country {
       .map((x: any) => new Document(x));
   }
 
-  public code: string;
-  public name: string;
-  public currency: string;
-  public documents: Document[];
-  public maxWithdrawalAmount: number | null;
+  public readonly code: string;
+  public readonly name: string;
+  public readonly currency: string;
+  public readonly documents: Document[];
+  public readonly maxWithdrawalAmount: number | null;
 }

@@ -30,6 +30,7 @@ export default function Countries(countryResult: CountryResult) {
   const rows = countryResult.countries.map(renderRow)
   const query = countryResult.query;
   const prev = query.prevUrl ? <a href={query.prevUrl}>❮ Previous</a> : null;
+  const next = query.nextUrl ? <a href={query.nextUrl}>Next ❯</a> : null;
 
   return (
     <div className="table">
@@ -47,7 +48,7 @@ export default function Countries(countryResult: CountryResult) {
 
       <ul className="pager">
         <li className="prev" key="prev">{prev}</li>
-        <li className="next" key="next"><a href={query.nextUrl}>Next ❯</a></li>
+        <li className="next" key="next">{next}</li>
       </ul>
     </div>
   )

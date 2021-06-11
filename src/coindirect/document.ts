@@ -4,8 +4,8 @@ export class Document {
         this.icon = this.mapDocumentCodeToIcon(document);
     }
 
-    public description: string;
-    public icon: string;
+    public readonly description: string;
+    public readonly icon: string;
 
     private mapDocumentCodeToIcon(document: any) {
         switch (document.code) {
