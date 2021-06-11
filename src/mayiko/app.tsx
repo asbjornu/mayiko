@@ -9,8 +9,8 @@ export default function Mayiko(countryResult: CountryResult) {
     <html lang="en">
         <head>
           <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Welcome to Mayiko</title>
+          <meta name="viewport" content="width=device-width" />
+          <title>Welcome to Mayiko</title>
           <link rel="stylesheet" href="/style/index.css" />
           <link rel="icon" href="/img/icon.svg" />
           <link rel="shortcut icon" href="/img/icon.png" />
