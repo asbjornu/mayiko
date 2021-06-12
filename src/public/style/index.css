@@ -78,6 +78,36 @@ table td {
     padding: .8rem 1rem;
 }
 
+table th a {
+  color: #fff;
+}
+
+table th a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+table th a:after {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  content: '\00a0\00a0';
+}
+
+table th.sorted-ascending a:after {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  content: '\00a0↥';
+}
+
+table th.sorted-descending a:after {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  content: '\00a0↧';
+}
+
 table tbody tr {
   border-bottom: 1px solid #dddddd;
 }
@@ -99,19 +129,22 @@ table .name {
   min-width: 14rem;
 }
 
-table .max {
+table .maxWithdrawalAmount {
   min-width: 10rem;
   text-align: right;
 }
 
+table td.maxWithdrawalAmount {
+  padding-right: 2rem;
+}
+
 table .currency {
-  width: 6rem;
+  width: 7rem;
 }
 
 table .docs {
   width: 8rem;
 }
-
 
 table img {
   height: 1.4rem;

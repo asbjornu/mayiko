@@ -10,11 +10,16 @@ let coindirectClient: CoindirectClient;
 
 const mayikoRouter = new Router()
   .get("/", context => {
-    const query = new QueryState(context.request.url)
-    const countries = coindirectClient.fetchCountries(query)
-    const mayiko = Mayiko(countries);
-    const rendered = ReactDOMServer.renderToString(mayiko);
-    context.response.body = `<!DOCTYPE html>\n${rendered}`
+    try {
+      const query = QueryState.fromUrl(context.request.url)
+      const countries = coindirectClient.fetchCountries(query)
+      const mayiko = Mayiko(countries);
+      const rendered = ReactDOMServer.renderToString(mayiko);
+      context.response.body = `<!DOCTYPE html>\n${rendered}`
+    } catch (err) {
+      console.error(err);
+      context.response.body = err.toString();
+    }
   });
 
 const staticRouter = new Router()

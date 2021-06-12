@@ -10,9 +10,15 @@ export class CoindirectClient {
   }
 
   public fetchCountries(query: QueryState): CountryResult {
-    console.log(CoindirectClient.countries.length)
     query.total = CoindirectClient.countries.length;
-    const countries = CoindirectClient.countries.slice(query.offset, query.end);
+    let countries = CoindirectClient.countries;
+
+    if (query.sort.field != null) {
+      countries = query.sort.sort(countries);
+    }
+
+    countries = countries.slice(query.offset, query.end);
+
     return new CountryResult(countries, query);
   }
 
