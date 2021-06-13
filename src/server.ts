@@ -2,7 +2,8 @@
 import ReactDOMServer from "https://dev.jspm.io/react-dom/server.js";
 import { Application, Router, send } from "https://deno.land/x/oak@v6.0.1/mod.ts";
 import type { Context } from "https://deno.land/x/oak@v6.0.1/mod.ts";
-import Mayiko from "./mayiko/app.tsx";
+import Index from "./mayiko/index.tsx";
+import Countries from "./mayiko/countries.tsx";
 import { CoindirectClient } from './coindirect/coindirect_client.ts';
 import { QueryState } from './coindirect/query_state.ts'
 
@@ -10,16 +11,18 @@ let coindirectClient: CoindirectClient;
 
 const mayikoRouter = new Router()
   .get("/", context => {
-    try {
-      const query = QueryState.fromUrl(context.request.url)
-      const countries = coindirectClient.fetchCountries(query)
-      const mayiko = Mayiko(countries);
-      const rendered = ReactDOMServer.renderToString(mayiko);
-      context.response.body = `<!DOCTYPE html>\n${rendered}`
-    } catch (err) {
-      console.error(err);
-      context.response.body = err.toString();
-    }
+    console.log('Index');
+    render(context, Index())
+  })
+  .get("/countries", context => {
+    console.log('Countries');
+    const query = QueryState.fromUrl(context.request.url);
+    const countries = coindirectClient.fetchCountries(query);
+    render(context, Countries(countries));
+  })
+  .get("/currencies", context => {
+    /*const countries = coindirectClient.fetchCountries()
+    render(context, Countries(countries))*/
   });
 
 const staticRouter = new Router()
@@ -36,7 +39,24 @@ app.addEventListener("listen", async ({ hostname, port, secure }) => {
       "localhost"}:${port}`,
   );
 });
+app.use(handleError);
 app.listen({ port: 5000 });
+
+function render(context: Context, element: React.ReactElement) {
+  const html = ReactDOMServer.renderToString(element);
+  context.response.body = `<!DOCTYPE html>\n${html}`
+}
+
+async function handleError(context: Context, next: any) {
+  console.log(typeof(next));
+
+  try {
+    await next();
+  } catch (err) {
+    console.error(err);
+    context.response.body = err.toString();
+  }
+}
 
 async function handleStatic(context: Context) {
   await send(context, context.request.url.pathname, {

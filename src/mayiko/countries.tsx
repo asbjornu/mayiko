@@ -1,8 +1,10 @@
 // @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
 import React from "https://dev.jspm.io/react/index.js";
 import Logo from './logo.tsx'
+import CountryTable from './country_table.tsx'
+import type { CountryResult } from '../coindirect/country_result.ts'
 
-export default function Index() {
+export default function Mayiko(countryResult: CountryResult) {
   return (
     <html lang="en">
         <head>
@@ -20,12 +22,7 @@ export default function Index() {
           </header>
 
           <main>
-            <nav>
-              <ul>
-                <li><a href="/countries">Countries</a></li>
-                <li><a href="/currencies">Currencies</a></li>
-              </ul>
-            </nav>
+            <CountryTable {...countryResult} />
           </main>
 
           <footer>

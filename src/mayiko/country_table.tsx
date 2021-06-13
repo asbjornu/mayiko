@@ -36,7 +36,7 @@ function headerClassName(field: string, query: QueryState): string {
   return field;
 }
 
-export default function Countries(countryResult: CountryResult) {
+export default function CountryTable(countryResult: CountryResult) {
   const rows = countryResult.countries.map(renderRow)
   const query = countryResult.query;
   const prev = query.prevUrl ? <a href={query.prevUrl} rel="prev">❮ Previous</a> : null;
