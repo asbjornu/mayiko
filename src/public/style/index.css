@@ -23,18 +23,8 @@ a:hover {
   color: #000;
 }
 
-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 header {
-  margin: 1rem 0;
-}
-
-header h1 {
-  margin: 0;
+  margin: 2rem 0;
   line-height: 1.5;
   font-size: 18px;
   font-weight: 400;
@@ -42,29 +32,68 @@ header h1 {
   color: #000;
 }
 
+.container h2 {
+  background-color: #481ECD;
+  font-weight: bold;
+  color: #fff;
+  padding: .5rem 1rem;
+}
+
 header h1 strong {
   font-weight: 700;
 }
 
-.page p {
+header nav {
+  margin-top: 2rem;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+
+header nav ul li {
+  width: 50%;
+  margin: 0rem 1rem;
+}
+
+header nav ul li:first-of-type {
+  text-align: right;
+}
+
+header nav ul li:last-of-type {
+  text-align: left;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main > * {
+  max-width: 50%;
+}
+
+p {
   margin: 0;
   line-height: 1.5;
   text-align: center;
   color: #333;
 }
 
-.logo + p {
-  margin-top: 6px;
-}
-
 .table {
   margin-top: 1rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 50%;
 }
 
 table {
   border-collapse: collapse;
-  min-width: 60rem;
+  table-layout: fixed;
+  width: 100%;
 }
 
 table thead tr {
@@ -170,6 +199,53 @@ table img {
 
 .pager .next {
   text-align: right;
+}
+
+.currencies {
+  background-color: #481ECD;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.currencies ol {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.currencies li {
+  margin: .5rem 1rem;
+  width: 3rem;
+  text-align: center;
+}
+
+.currencies a {
+  color: #fff;
+}
+
+.currencies li:hover {
+  background-color: #fff;
+}
+
+.currencies li:hover a,
+.currencies a:hover {
+  color: #481ECD;
+}
+
+.currencies .chosen {
+  background-color: #481ECD;
+}
+
+.currencies .chosen a {
+  color: #fff;
+}
+
+.currencies:after {
+  display: block;
+  content: ' ';
+  clear: both;
 }
 
 footer {

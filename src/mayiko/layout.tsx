@@ -1,7 +1,5 @@
 // @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
 import React from "https://dev.jspm.io/react/index.js";
-import Nav from './nav.tsx'
-import Logo from './logo.tsx'
 
 export default function Layout(content: React.ReactElement | undefined = undefined) {
   return (
@@ -16,12 +14,12 @@ export default function Layout(content: React.ReactElement | undefined = undefin
         </head>
         <body>
           <header>
-            <p className="logo"><Logo /></p>
+            <a href="/" className="logo">
+              <img src="/img/logo.svg" height="75" alt="Mayiko" title="'Mayiko' is chichewan for 'countries'" />
+            </a>
           </header>
 
-          <main>
-            {content}
-          </main>
+          {content}
 
           <footer>
             <p className="copyinfo">

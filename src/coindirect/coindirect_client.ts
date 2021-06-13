@@ -1,4 +1,4 @@
-import { CountryResult } from "./country_result.ts";
+import { CountryResult } from "./country_result.ts"
 import { Country } from "./country.ts";
 import type { QueryState } from "./query_state.ts";
 
@@ -9,17 +9,29 @@ export class CoindirectClient {
     CoindirectClient.countries = countries;
   }
 
-  public fetchCountries(query: QueryState): CountryResult {
-    query.total = CoindirectClient.countries.length;
+  public countries(query: QueryState): CountryResult {
     let countries = CoindirectClient.countries;
 
     if (query.sort.field != null) {
       countries = query.sort.sort(countries);
     }
 
+    const currency = query.currency;
+    if (currency !== undefined) {
+      countries = countries.filter(country => country.currency.toUpperCase() === currency.toUpperCase());
+    }
+
+    query.total = countries.length;
     countries = countries.slice(query.offset, query.end);
 
     return new CountryResult(countries, query);
+  }
+
+  public get currencies():  string[] {
+    return CoindirectClient.countries
+      .map(country => country.currency)
+      .filter((currency, index, self) => self.indexOf(currency) === index)
+      .sort();
   }
 
   public static async create(): Promise<CoindirectClient> {
