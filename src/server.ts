@@ -17,6 +17,7 @@ const staticRouter = new Router()
   .get("/style/:path", handleStatic);
 
 const app = new Application();
+app.use(handleError);
 app.use(staticRouter.routes());
 app.use(mayikoRouter.routes());
 app.addEventListener("listen", async ({ hostname, port, secure }) => {
@@ -26,11 +27,14 @@ app.addEventListener("listen", async ({ hostname, port, secure }) => {
       "localhost"}:${port}`,
   );
 });
-app.use(handleError);
-app.listen({ port: 5000 });
 
-function renderCountries(context: RouterContext) {
+if (import.meta.main) {
+  await app.listen({ port: 5000 });
+}
+
+async function renderCountries(context: RouterContext) {
   const query = QueryState.fromContext(context);
+  coindirectClient = coindirectClient || (await CoindirectClient.create());
   const countries = coindirectClient.countries(query);
   const currencies = coindirectClient.currencies;
 
@@ -58,3 +62,5 @@ async function handleStatic(context: Context) {
     root: `${Deno.cwd()}/public`
   });
 }
+
+export default app;
