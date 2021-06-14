@@ -47,8 +47,6 @@ function render(context: Context, element: React.ReactElement) {
 }
 
 async function handleError(context: Context, next: any) {
-  console.log(typeof(next));
-
   try {
     await next();
   } catch (err) {
