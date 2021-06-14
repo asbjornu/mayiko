@@ -8,3 +8,12 @@ Deno.test("it should render EUR currency", async () => {
     .expect("Content-Type", "text/html; charset=utf-8")
     .expect(/EUR/);
 });
+
+Deno.test("it should render EUR currency", async () => {
+  await superdeno(app.handle.bind(app))
+    .get("/eur")
+    .expect(200)
+    .expect("Content-Type", "text/html; charset=utf-8")
+    .expect(/EUR/)
+    .expect(/Austria/);
+});
