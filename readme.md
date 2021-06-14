@@ -15,11 +15,39 @@ deno run --allow-net --allow-read server.ts
 ## Contribute
 
 As this is only a demo for me to learn Deno and React, I don't expect anyone
-to contribute, but more for future reference to myself, this is how Deno is
-started in "watching" mode:
+to contribute, so the below is more for future reference to myself:
+
+### Run Application
+
+To run Mayiko with Deno in "watching" mode, first make sure you're in the `src`
+directory:
+
+```shell
+cd src
+```
+
+Then execute the following to start the application:
 
 ```shell
 deno run --allow-net --allow-read --watch=./**/*.ts,./**/*.tsx,./**/*.css server.ts
+```
+
+After a short while, `Mayiko is now listening on: http://localhost:5000` should
+be printed in your terminal. You can then visit `http://localhost:5000` to view
+try the Mayiko application.
+
+### Run Tests
+
+To run tests, first make sure you're in the `src` directory:
+
+```shell
+cd src
+```
+
+Then type the following into the terminal to run the test suite:
+
+```shell
+deno test --allow-net --location 'http://localhost'
 ```
 
 [coindirect]: https://www.coindirect.com/
