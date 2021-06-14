@@ -9,7 +9,7 @@ function renderDocument(document: Document) {
   const iconUrl = `/img/${document.icon}.svg`
 
   return (
-    <img src={iconUrl} alt={document.description} title={document.description} />
+    <img key={document.icon} src={iconUrl} alt={document.description} title={document.description} />
   )
 }
 
