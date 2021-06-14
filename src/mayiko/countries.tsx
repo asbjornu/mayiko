@@ -17,10 +17,10 @@ function renderRow(country: Country) {
   const documents = country.documents.map(renderDocument)
 
   return (
-    <tr key={country.code}>
-      <td>{country.name}</td>
+    <tr key={country.code} className={country.code.toLowerCase()}>
+      <td className="name">{country.name}</td>
       <td className="maxWithdrawalAmount">{country.maxWithdrawalAmount}</td>
-      <td><a href={`/${country.currency}`}>{country.currency}</a></td>
+      <td><a href={`/${country.currency.toLowerCase()}`}>{country.currency}</a></td>
       <td>{documents}</td>
     </tr>
   )
@@ -46,7 +46,7 @@ export default function Countries(countryResult: CountryResult) {
   const sortByCurrency = query.sort.by("currency");
 
   return (
-    <div className="table container">
+    <div className="countries container">
       <h2>Countries</h2>
       <table>
         <thead>

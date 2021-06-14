@@ -2,9 +2,10 @@
 import React from "https://dev.jspm.io/react/index.js";
 
 function className(currency: string, currentCurrency: string | undefined) {
-  return currentCurrency && currency.toUpperCase() === currentCurrency.toUpperCase()
-    ? 'chosen'
-    : '';
+  currency = currency.toLowerCase();
+  return currentCurrency && currency === currentCurrency.toLowerCase()
+    ? `chosen ${currency}`
+    : currency;
 }
 
 export default function Currencies(props: any) {
