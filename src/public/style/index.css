@@ -235,11 +235,11 @@ table img {
 }
 
 .currencies .chosen {
-  background-color: #481ECD;
+  background-color: #fff;
 }
 
 .currencies .chosen a {
-  color: #fff;
+  color: #481ECD;
 }
 
 .currencies:after {

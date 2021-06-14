@@ -20,7 +20,7 @@ function renderRow(country: Country) {
     <tr key={country.code}>
       <td>{country.name}</td>
       <td className="maxWithdrawalAmount">{country.maxWithdrawalAmount}</td>
-      <td>{country.currency}</td>
+      <td><a href={`/${country.currency}`}>{country.currency}</a></td>
       <td>{documents}</td>
     </tr>
   )
