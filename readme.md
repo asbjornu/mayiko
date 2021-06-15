@@ -1,4 +1,4 @@
-# Mayiko
+# ![Mayiko][logo]
 
 "Mayiko" is chichewan for "countries". This application is a demo of how to use
 the [Coindirect] `country` API with [Deno] and [React].
@@ -53,3 +53,4 @@ deno test --allow-net --location 'http://localhost'
 [coindirect]: https://www.coindirect.com/
 [deno]: https://deno.land/
 [react]: https://reactjs.org/
+[logo]: https://github.com/asbjornu/mayiko/raw/main/src/public/img/icon.png
