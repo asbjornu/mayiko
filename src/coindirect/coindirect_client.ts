@@ -1,4 +1,4 @@
-import { CountryResult } from "./country_result.ts"
+import { CountryResult } from "./country_result.ts";
 import { Country } from "./country.ts";
 import type { QueryState } from "./query_state.ts";
 
@@ -18,7 +18,9 @@ export class CoindirectClient {
 
     const currency = query.currency;
     if (currency !== undefined) {
-      countries = countries.filter(country => country.currency.toUpperCase() === currency.toUpperCase());
+      countries = countries.filter((country) =>
+        country.currency.toUpperCase() === currency.toUpperCase()
+      );
     }
 
     query.total = countries.length;
@@ -27,9 +29,9 @@ export class CoindirectClient {
     return new CountryResult(countries, query);
   }
 
-  public get currencies():  string[] {
+  public get currencies(): string[] {
     return CoindirectClient.countries
-      .map(country => country.currency)
+      .map((country) => country.currency)
       .filter((currency, index, self) => self.indexOf(currency) === index)
       .sort();
   }
@@ -43,7 +45,7 @@ export class CoindirectClient {
 
   private static buildCoinDirectUrl() {
     const url = new URL("https://api.coindirect.com/api/country");
-    url.searchParams.append("max", '1300');
+    url.searchParams.append("max", "1300");
     return url.href;
   }
 }

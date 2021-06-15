@@ -1,11 +1,13 @@
-import { QueryState } from './query_state.ts';
-import type { SortState } from './sort_state.ts';
+import { QueryState } from "./query_state.ts";
+import type { SortState } from "./sort_state.ts";
 
 export class UrlBuilder {
-  public constructor(public readonly query: QueryState,
-                     public readonly sort: SortState) {}
+  public constructor(
+    public readonly query: QueryState,
+    public readonly sort: SortState,
+  ) {}
 
-  public toString = () : string => {
+  public toString = (): string => {
     let url = `?offset=${this.query.offset}`;
 
     if (this.query.limit != QueryState.defaultLimit) {
@@ -13,10 +15,10 @@ export class UrlBuilder {
     }
 
     if (this.sort.field !== null) {
-      const direction = this.sort.ascending ? '' : '-';
+      const direction = this.sort.ascending ? "" : "-";
       url = `${url}&sort=${direction}${this.sort.field}`;
     }
 
     return url;
-  }
+  };
 }

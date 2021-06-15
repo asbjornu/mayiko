@@ -1,12 +1,14 @@
-import { UrlBuilder } from './url_builder.ts';
-import type { QueryState } from './query_state.ts'
+import { UrlBuilder } from "./url_builder.ts";
+import type { QueryState } from "./query_state.ts";
 
 export class SortState {
-  private constructor(private readonly query: QueryState,
-                      public readonly field: string | null,
-                      public readonly ascending: boolean) {}
+  private constructor(
+    private readonly query: QueryState,
+    public readonly field: string | null,
+    public readonly ascending: boolean,
+  ) {}
 
-  public by(field: string) : string {
+  public by(field: string): string {
     // console.log({ field, currentField: this.field, ascending: this.ascending })
     let ascending = this.ascending;
 
@@ -40,22 +42,25 @@ export class SortState {
 
   private static sorter(state: SorterState): number {
     if (state.field == null) {
-      return this.genericSort(state)
+      return this.genericSort(state);
     }
 
     const aValue = state.a[state.field];
     const bValue = state.b[state.field];
 
-    if (typeof(aValue) === "string") {
+    if (typeof (aValue) === "string") {
       return state.ascending
-        ? aValue?.localeCompare(bValue, 'nb')
-        : bValue?.localeCompare(aValue, 'nb');
-    } else if (typeof(aValue) === "number") {
-      return state.ascending
-        ? aValue - bValue
-        : bValue - aValue;
+        ? aValue?.localeCompare(bValue, "nb")
+        : bValue?.localeCompare(aValue, "nb");
+    } else if (typeof (aValue) === "number") {
+      return state.ascending ? aValue - bValue : bValue - aValue;
     } else {
-      const valueState = new SorterState(aValue, bValue, state.field, state.ascending);
+      const valueState = new SorterState(
+        aValue,
+        bValue,
+        state.field,
+        state.ascending,
+      );
       return this.genericSort(valueState);
     }
   }
@@ -71,7 +76,6 @@ export class SortState {
 
     return 0;
   }
-
 }
 
 class SorterState {

@@ -1,10 +1,17 @@
 // @deno-types="https://deno.land/x/servest@v1.3.1/types/react-dom/server/index.d.ts"
 import ReactDOMServer from "https://dev.jspm.io/react-dom/server.js";
-import { Application, Router, send } from "https://deno.land/x/oak@v6.0.1/mod.ts";
-import type { Context, RouterContext } from "https://deno.land/x/oak@v6.0.1/mod.ts";
+import {
+  Application,
+  Router,
+  send,
+} from "https://deno.land/x/oak@v6.0.1/mod.ts";
+import type {
+  Context,
+  RouterContext,
+} from "https://deno.land/x/oak@v6.0.1/mod.ts";
 import Index from "./mayiko/index.tsx";
-import { CoindirectClient } from './coindirect/coindirect_client.ts';
-import { QueryState } from './coindirect/query_state.ts'
+import { CoindirectClient } from "./coindirect/coindirect_client.ts";
+import { QueryState } from "./coindirect/query_state.ts";
 
 let coindirectClient: CoindirectClient;
 
@@ -43,7 +50,7 @@ async function renderCountries(context: RouterContext) {
 
 function render(context: Context, element: React.ReactElement) {
   const html = ReactDOMServer.renderToString(element);
-  context.response.body = `<!DOCTYPE html>\n${html}`
+  context.response.body = `<!DOCTYPE html>\n${html}`;
 }
 
 async function handleError(context: Context, next: any) {
@@ -57,7 +64,7 @@ async function handleError(context: Context, next: any) {
 
 async function handleStatic(context: Context) {
   await send(context, context.request.url.pathname, {
-    root: `${Deno.cwd()}/public`
+    root: `${Deno.cwd()}/public`,
   });
 }
 

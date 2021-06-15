@@ -15,11 +15,13 @@ export default function Currencies(props: any) {
   return (
     <div className="currencies container">
       <h2>Currencies</h2>
-      <ol className="currencies">{
-        currencies.map(currency =>
-          <li key={currency} className={className(currency, chosenCurrency)}><a href={`/${currency.toLowerCase()}`}>{currency}</a></li>
-        )
-      }</ol>
+      <ol className="currencies">
+        {currencies.map((currency) =>
+          <li key={currency} className={className(currency, chosenCurrency)}>
+            <a href={`/${currency.toLowerCase()}`}>{currency}</a>
+          </li>
+        )}
+      </ol>
     </div>
   );
 }
