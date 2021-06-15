@@ -14,8 +14,8 @@ deno run --allow-net --allow-read server.ts
 
 ## Contribute
 
-As this is only a demo for me to learn Deno and React, I don't expect anyone
-to contribute, so the below is more for future reference to myself:
+As this is only a demo for me to learn Deno and React, I don't expect anyone to
+contribute, so the below is more for future reference to myself:
 
 ### Run Application
 

@@ -1,4 +1,8 @@
-import { superdeno, IResponse, Test } from "https://deno.land/x/superdeno@4.2.1/mod.ts";
+import {
+  IResponse,
+  superdeno,
+  Test,
+} from "https://deno.land/x/superdeno@4.2.1/mod.ts";
 import { DOMParser } from "https://deno.land/x/deno_dom@v0.1.12-alpha/deno-dom-wasm.ts";
 import type { Application } from "https://deno.land/x/oak@v6.0.1/mod.ts";
 import type { Element } from "https://deno.land/x/deno_dom@v0.1.12-alpha/deno-dom-wasm.ts";
@@ -20,9 +24,12 @@ interface ElementSelector {
 }
 
 class HtmlExpectation {
-  public constructor(private readonly test: Test, private readonly query: string) {}
+  public constructor(
+    private readonly test: Test,
+    private readonly query: string,
+  ) {}
   public toEqual(elementSelector: ElementSelector, comparison: any): Test {
-    return this.test.expect(response => {
+    return this.test.expect((response) => {
       const doc = new DOMParser().parseFromString(response.text, "text/html")!;
       const element = doc.querySelector(this.query)!;
       const e = elementSelector(element);
@@ -32,8 +39,10 @@ class HtmlExpectation {
 }
 
 class TestContext {
-  public constructor(public readonly url: string,
-                     public readonly app: Application) {}
+  public constructor(
+    public readonly url: string,
+    public readonly app: Application,
+  ) {}
 
   public expect(status: number): Test;
   public expect(query: string): HtmlExpectation;
@@ -42,7 +51,7 @@ class TestContext {
     const test = superdeno(app.handle.bind(app)).get(this.url);
 
     if (args.length == 1) {
-      if (typeof(args[0]) === 'number') {
+      if (typeof (args[0]) === "number") {
         return test.expect(args[0]);
       }
 
@@ -65,13 +74,13 @@ export function describe(url: string, fn: Describe) {
 export function suit(fn: Void) {
   mocha.setup({ ui: "bdd", reporter: "spec" });
   fn();
-  mocha.run(onCompleted).globals(["onerror"])
+  mocha.run(onCompleted).globals(["onerror"]);
 }
 
 function onCompleted(failures: number): void {
   if (failures > 0) {
-      Deno.exit(1);
+    Deno.exit(1);
   } else {
-      Deno.exit(0);
+    Deno.exit(0);
   }
 }
