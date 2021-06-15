@@ -22,9 +22,21 @@ export default function Layout(content: React.ReactElement | undefined = undefin
           {content}
 
           <footer>
-            <p className="copyinfo">
-              <a href="https://thenounproject.com/term/countries/3437692/">countries</a> icon by <a href="https://thenounproject.com/kavya261990/">Icongeek26</a>,
-              from <a href="https://thenounproject.com/">the Noun Project</a>
+            <p>
+              <a href="https://thenounproject.com/term/countries/3437692/">Countries</a>
+              icon by <a href="https://thenounproject.com/kavya261990/">Icongeek26</a>,
+              <a href="https://thenounproject.com/term/address/3424189/">Address</a>
+              icon by <a href="https://thenounproject.com/martinsratkus92/">Martins Ratkus</a>,
+              <a href="https://thenounproject.com/term/selfie/2059723/">Selfie</a>
+              icon by <a href="https://thenounproject.com/rose-alice-design/">Alice Design</a>,
+              <a href="https://thenounproject.com/term/passport/2128103/">Passport</a>
+              icon by <a href="https://thenounproject.com/prosymbols/">ProSymbols</a>,
+              from <a href="https://thenounproject.com/">the Noun Project</a>.
+            </p>
+            <p>
+              Built with <a href="https://deno.land">Deno</a> and
+              <a href="https://reactjs.com">React</a> by
+              <a href="https://asbjor.nu">Asbjørn Ulsberg</a>.
             </p>
           </footer>
       </body>

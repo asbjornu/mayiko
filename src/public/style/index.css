@@ -242,15 +242,21 @@ p {
 }
 
 footer {
-  margin: 1rem 0;
+  margin: 1rem auto;
   font-size: .9rem;
-}
-
-footer .copyinfo {
+  max-width: 50%;
   color: #999;
 }
 
-footer .copyinfo a {
+footer p {
+  color: #999;
+}
+
+footer a {
   color: #999;
   margin: 0 .14em;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
