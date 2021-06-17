@@ -43,4 +43,17 @@ suit(() => {
         "Mayotte",
       ));
   });
+
+  describe("/?sort=-name", (x) => {
+    it("should return 200 OK", () => x.expect(200));
+    it("should return HTML", () =>
+      x.expect("Content-Type", "text/html; charset=utf-8"));
+    it("EUR should not be chosen", () =>
+      x.expect(".currencies .eur.chosen a").toEqual(null));
+    it("should include Zambia", () =>
+      x.expect(".countries .zm .name").toEqual(
+        (e) => e.textContent,
+        "Zambia",
+      ));
+  });
 });

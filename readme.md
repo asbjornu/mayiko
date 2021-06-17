@@ -47,7 +47,7 @@ cd src
 Then type the following into the terminal to run the test suite:
 
 ```shell
-deno test --allow-net --location 'http://localhost'
+deno test --allow-net --location http://localhost
 ```
 
 [coindirect]: https://www.coindirect.com/

@@ -28,12 +28,21 @@ class HtmlExpectation {
     private readonly test: Test,
     private readonly query: string,
   ) {}
-  public toEqual(elementSelector: ElementSelector, comparison: any): Test {
+
+  public toEqual(comparison: any): Test;
+  public toEqual(elementSelector: ElementSelector, comparison: any): Test;
+  public toEqual(...args: any[]): Test {
     return this.test.expect((response) => {
       const doc = new DOMParser().parseFromString(response.text, "text/html")!;
-      const element = doc.querySelector(this.query)!;
-      const e = elementSelector(element);
-      return expect(e).toEqual(comparison);
+      let element = doc.querySelector(this.query)!;
+      const comparison = args[args.length - 1];
+
+      if (args.length == 2) {
+        const elementSelector = args[0];
+        element = elementSelector(element);
+      }
+
+      return expect(element).toEqual(comparison);
     });
   }
 }
